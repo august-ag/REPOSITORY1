@@ -26,23 +26,36 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
+    backgroundColor: '#dcdcdc',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20
   },
+
   image: {
     width: 120,
     height: 120,
     borderRadius: 60,
     marginBottom: 20
   },
+
   input: {
     borderWidth: 1,
     width: '80%',
     padding: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: 'white'
   },
-  text: { fontSize: 16, marginVertical: 5},
-  buttonContainer: { marginTop: 10, width: '60%'}
+
+  text: {
+    fontSize: 16,
+    marginVertical: 5,
+    color: 'black'
+  },
+
+  buttonContainer: {
+    marginTop: 10,
+    width: '60%'
+  }
 });
