@@ -1,93 +1,48 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { View, Text, TextInput, Button, Image, ScrollView, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
+export default function App() {
+  const [name, setName] = useState('');
+  const [count, setCount] = useState(0);
+  const message =
+    count > 0
+      ? `${name}, you tapped ${count} times!`
+      : "Tap the + button to start";
+  
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Haro Everynyan!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">My name is August!</ThemedText>
-        <ThemedText>
-          This is me changing the text in VS Code so it can be shown on the Expo App. It's currently 9:00 PM on April 13, and I'm hoping I can pass this on time.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">My favorite game?</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Since we're talking about app development, I would like to share my fav game as of late. It's called Tomodachi Life on the Nintendo 3DS. Three days from now, a part 2 of the game will be released and I can't wait for it because it's super cute!`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">That is all :P</ThemedText>
-        <ThemedText>
-          {`That's it, I changed the text :PP Thank you all!`}
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image source={{ uri: 'https://scontent.fdvo1-2.fna.fbcdn.net/v/t39.30808-6/685565911_1002007175838490_3390482727752603286_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeGGPxjr67w48K5FYkBfpiGI8SLQ0Ac_v7TxItDQBz-_tEbQDzzaKJx02Se3NrkeWOBryszwMgmhgdE08FRvcJLW&_nc_ohc=ozU2Pmwt7nEQ7kNvwGxJZaJ&_nc_oc=AdpThyRMKWuqGTjwrX2GgiRq9xHd9UZ2GVQkFt_RhjGn-mdjUS3jH-JHXY8c_9_rz3k&_nc_zt=23&_nc_ht=scontent.fdvo1-2.fna&_nc_gid=nJvHVacht9nmDVFUjR6yBw&_nc_ss=7b2a8&oh=00_Af4WkJJFke_LDbzpMeeZpTsQshqPGngpAmbXNXvYLzTXdA&oe=69FA89B7' }} style={styles.image}/>
+      <TextInput placeholder="Enter your name" onChangeText={setName} style={styles.input}/>
+      <Text style={styles.text}>{name === '' ? "Please enter your name" :  `Hello, ${name}!`}</Text>
+      <Text style={styles.text}>{message}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="+" onPress={() => setCount(count + 1)} />
+        <Button title="-" onPress={() => setCount(count - 1)} />
+        <Button title="Reset" onPress={() => setCount(0)} />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
+    padding: 20
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 20
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  input: {
+    borderWidth: 1,
+    width: '80%',
+    padding: 10,
+    marginBottom: 10
   },
+  text: { fontSize: 16, marginVertical: 5},
+  buttonContainer: { marginTop: 10, width: '60%'}
 });
-
-const myName = "August";
-const greet = (name) => {
- return `This is my world. Welcome, ${name}!`;
-};
-const classmates = ["Khiem", "Chelsea", "Kayela", "Krismarie", "Rei", "Gaven", "Lore"];
-classmates.map(name => greet(name));
-console.log(classmates.map(name => greet(name)));
